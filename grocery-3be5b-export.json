@@ -1,0 +1,42 @@
+{
+    "sections": {
+        "section1": {
+            "name": "Section 1"
+        },
+        "section2": {
+            "name": "Section 2"
+        }
+    },
+    "items": {
+        "mush1": {
+            "name": "Mush 1",
+            "sectionId": "section1"
+        },
+        "mush2": {
+            "name": "Mush 2",
+            "sectionId": "section1"
+        },
+        "mush3": {
+            "name": "Shputz 3",
+            "sectionId": "section2"
+        },
+        "mush4": {
+            "name": "Item to add",
+            "sectionId": "section2"
+        }
+    },
+    "activeItems": {
+        "mush1": {
+            "isChecked": false,
+            "quantity": 1
+        },
+        "mush2": {
+            "isChecked": true,
+            "quantity": 2
+        },
+        "mush3": {
+            "isChecked": false,
+            "quantity": 3
+        }
+    }
+}

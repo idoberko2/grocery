@@ -8,7 +8,7 @@ export const getSectionIds = createSelector(
 );
 
 export const getSection = createSelector(
-    [sectionsSelector],
+    [ sectionsSelector ],
     sections => sectionId => sections[sectionId]
 );
 

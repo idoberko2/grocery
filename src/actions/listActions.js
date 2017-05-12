@@ -6,66 +6,24 @@ export const consts = {
     SET_ITEM_IS_CHECKED: 'SET_ITEM_IS_CHECKED'
 };
 
-function receiveList(list) {
-    const sectionsMap = list.reduce((prev, cur) => {
-        const {
-            id,
-            name,
-            items
-        } = cur;
-        const itemIds = items.map(item => item.id);
-
-        prev[id] = {
-            id,
-            name,
-            itemIds
-        };
-
-        return prev;
-    }, {});
-
-    const itemsMap = list.reduce((prev, cur) => {
-        const {
-            id,
-            items
-        } = cur;
-
-        prev[id] = items.reduce((prev, cur) => {
-            const {
-                id,
-                name,
-                isChecked,
-                sortOrder
-            } = cur;
-
-            prev[id] = {
-                id,
-                name,
-                isChecked,
-                sortOrder
-            };
-
-            return prev;
-        }, {});
-
-        return prev;
-    }, {});
+function receiveListData(data) {
+    const {
+        sections,
+        items,
+        activeItems
+    } = data;
 
     return {
         type: consts.RECEIVE_LIST,
-        sectionsMap,
-        itemsMap
-    };
+        sections,
+        items,
+        activeItems
+    }
 }
 
 export const getList = () => dispatch =>
-    ApiList.getList()
-        .then(list => {
-            console.log({list});
-            console.log(typeof list);
-            console.log(Array.isArray(list));
-            return dispatch(receiveList(list));
-        })
+    ApiList.getListData()
+        .then(data => dispatch(receiveListData(data)))
         .catch(err => console.error(err));
 
 export const toggleItem = (sectionId, itemId) => (dispatch, getState) => {
@@ -73,6 +31,6 @@ export const toggleItem = (sectionId, itemId) => (dispatch, getState) => {
         type: consts.SET_ITEM_IS_CHECKED,
         sectionId,
         itemId,
-        value: !isItemChecked(getState())(sectionId, itemId)
+        value: !isItemChecked(getState())(itemId)
     })
 };

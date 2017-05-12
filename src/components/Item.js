@@ -21,8 +21,8 @@ ListItem.propTypes = {
     onClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, { sectionId, rowId }) => {
-    const item = getItem(state)(sectionId, rowId);
+const mapStateToProps = (state, { rowId }) => {
+    const item = getItem(state)(rowId);
 
     const {
         name,

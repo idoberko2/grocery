@@ -33,7 +33,7 @@ export class SmartItemList extends Component {
 
     static renderRow(rowData, sectionId, rowId) {
         return (
-            <Item sectionId={ sectionId } rowId={ rowId } />
+            <Item rowId={ rowId } />
         );
     }
 

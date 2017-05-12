@@ -9,8 +9,8 @@ import { Provider } from 'react-redux';
 
 import store from './src/redux/store';
 
-// you can set your style right here, it'll be propagated to application
 const uiTheme = {
+    fontFamily: 'Arial',
     palette: {
         primaryColor: COLOR.red500,
     },

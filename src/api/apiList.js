@@ -1,29 +1,56 @@
 import db from './firebase';
 
 export default class ApiList {
-    static getList() {
-        // const sections = [
-        //     {
-        //         name: 'section 1',
-        //         id: 'section1',
-        //         items: [
-        //             { name: 'mush1', isChecked: false, id: 'mush1' },
-        //             { name: 'mush2', isChecked: true, id: 'mush2' }
-        //         ]
-        //     },
-        //     {
-        //         name: 'section 2',
-        //         id: 'section2',
-        //         items: [
-        //             { name: 'shputz3', isChecked: false, id: 'mush3' }
-        //         ]
-        //     }
-        // ];
+    static getValue(resource) {
+        return new Promise((resolve, reject) => {
+            db
+                .ref(resource)
+                .once('value', snapshot => resolve(snapshot.val()))
+                .catch(error => reject(error));
+        });
+    }
 
-        const sections = db
-            .ref('/user/sections')
-            .once('value', snapshot => snapshot.val());
+    static getSections() {
+        return ApiList.getValue('/sections');
+    }
 
-        return sections;
+    static getItems() {
+        return ApiList.getValue('/items');
+    }
+
+    static getActiveItems() {
+        return ApiList.getValue('/activeItems');
+    }
+
+    static getListData() {
+        const sectionsPromise = ApiList.getSections(),
+            itemsPromise = ApiList.getItems(),
+            activeItemsPromise = ApiList.getActiveItems();
+
+        return new Promise((resolve, reject) => {
+            Promise.all([ sectionsPromise, itemsPromise, activeItemsPromise ]).then(values => {
+                const sections = values[0],
+                    items = values[1],
+                    activeItems = values[2];
+
+                // Object
+                //     .keys(sections)
+                //     .forEach(sectionId => {
+                //         sections[sectionId].itemIds = [];
+                //     });
+                //
+                // Object
+                //     .keys(items)
+                //     .forEach(itemId => {
+                //         sections[items[itemId].sectionId].itemIds.push(itemId);
+                //     });
+
+                resolve({
+                    sections,
+                    items,
+                    activeItems
+                });
+            })
+        });
     }
 };

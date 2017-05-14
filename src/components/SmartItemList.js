@@ -52,6 +52,7 @@ export class SmartItemList extends Component {
             <ItemList dataSource={ dataSource }
                       renderRow={ SmartItemList.renderRow }
                       renderSectionHeader={ SmartItemList.renderSectionHeader }
+                      onPressAdd={ () => console.log('mush tap') }
             />
         );
     }

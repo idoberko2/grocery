@@ -8,6 +8,8 @@ const firebaseConfig = {
         "storageBucket":    "grocery-3be5b.appspot.com"
 };
 
+// const firebaseConfig = get('firebaseConfig');
+
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 

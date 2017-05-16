@@ -5,20 +5,16 @@ import PageTitle from "../common/PageTitle";
 import ItemList from './SmartItemList';
 
 
-export default class List extends Component {
-    render() {
-        return (
-            <View style={ styles.container }>
-                <View style={ styles.titleContainer }>
-                    <StatusBar />
-                    <PageTitle title="Mush"
-                    />
-                </View>
-                <ItemList />
-            </View>
-        );
-    }
-}
+export default List = () => (
+    <View style={ styles.container }>
+        <View style={ styles.titleContainer }>
+            <StatusBar />
+            <PageTitle title="Mush"
+            />
+        </View>
+        <ItemList />
+    </View>
+);
 
 const styles = StyleSheet.create({
     container: {

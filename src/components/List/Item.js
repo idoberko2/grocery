@@ -4,8 +4,8 @@ import CheckBox from 'react-native-checkbox';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { toggleItem } from '../actions/listActions';
-import { getItem } from '../selectors/itemSelectors';
+import { toggleItem } from '../../actions/listActions';
+import { getItem } from '../../selectors/itemSelectors';
 
 const ListItem = ({ name, isChecked, onClick, ...other }) => (
     <CheckBox label={ name }

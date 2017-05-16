@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import { ListView, Text, View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import ItemList from './ItemList';
 import Item from './Item';
 import {
     getSectionIds,
     getSectionFromBlob as getSectionHeaderData
-} from '../selectors/sectionSelectors';
+} from '../../selectors/sectionSelectors';
 import {
     getBlob,
     getFilteredItemIds,
     getItemFromBlob as getRowData
-} from '../selectors/itemSelectors';
-import { getList } from '../actions/listActions';
+} from '../../selectors/itemSelectors';
+import { getList } from '../../actions/listActions';
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1.id !== r2.id,
@@ -45,25 +46,30 @@ export class SmartItemList extends Component {
 
     render () {
         const {
-            dataSource
+            dataSource,
+            goToItemCatalog
         } = this.props;
 
         return (
             <ItemList dataSource={ dataSource }
                       renderRow={ SmartItemList.renderRow }
                       renderSectionHeader={ SmartItemList.renderSectionHeader }
-                      onPressAdd={ () => console.log('mush tap') }
+                      onPressAdd={ goToItemCatalog }
             />
         );
     }
 }
 
 const mapStateToProps = state => ({
-    dataSource: dataSource.cloneWithRowsAndSections(getBlob(state), getSectionIds(state), getFilteredItemIds(state))
+    dataSource: dataSource.cloneWithRowsAndSections(
+        getBlob(state), getSectionIds(state), getFilteredItemIds(state)
+    )
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    getList
-}, dispatch);
+const mapDispatchToProps = dispatch => Object.assign(bindActionCreators({
+    getList,
+}, dispatch), {
+    goToItemCatalog: () => dispatch(NavigationActions.navigate({ routeName: 'ItemCatalog' }))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmartItemList);

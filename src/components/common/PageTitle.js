@@ -4,11 +4,11 @@ import { StyleSheet, Text } from 'react-native';
 import { Toolbar } from 'react-native-material-ui';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { changeFilterText } from '../actions/filterActions';
+import { changeFilterText } from '../../actions/filterActions';
 
-const PageTitle = ({ placeholder, changeFilterText }) => (
+const PageTitle = ({ title, placeholder, changeFilterText }) => (
     <Toolbar searchable={ { onChangeText: changeFilterText, placeholder, autoFocus: true } }
-             centerElement="Mush"
+             centerElement={ title }
              translucent={ true }
     />
 );
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
 });
 
 PageTitle.propTypes = {
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    changeFilterText: PropTypes.func
 };
 
 PageTitle.defaultProps = {

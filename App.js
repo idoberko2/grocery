@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
-import { COLOR, ThemeProvider } from 'react-native-material-ui';
-import PageTitle from "./src/components/PageTitle";
-
-import ItemList from './src/components/SmartItemList';
-
+import {StyleSheet, View, StatusBar, Text} from 'react-native';
 import { Provider } from 'react-redux';
+import { COLOR, ThemeProvider } from 'react-native-material-ui';
+
+import StackNavigator from './src/utils/StackNavigator';
 
 import store from './src/redux/store';
 
@@ -37,43 +35,14 @@ const uiTheme = {
 // const sectionIds = ['section1', 'section2'];
 // const mushIds = [['mush1', 'mush2'], ['mush3']];
 
-
-class App extends Component {
-    render() {
-        return (
-            <View style={ styles.container }>
-                <View style={ styles.titleContainer }>
-                    <StatusBar />
-                    <PageTitle
-                    />
-                </View>
-                <ItemList />
-            </View>
-        );
-    }
-}
-
 export default class SmartApp extends Component {
     render() {
         return (
             <ThemeProvider uiTheme={uiTheme}>
                 <Provider store={ store }>
-                    <App />
+                    <StackNavigator />
                 </Provider>
             </ThemeProvider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        backgroundColor: '#fff',
-        direction: 'ltr'
-    },
-    titleContainer: {
-        flex: 2,
-    }
-});

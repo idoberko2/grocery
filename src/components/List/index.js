@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, StatusBar } from 'react-native';
-import PageTitle from "../common/PageTitle";
+import { MKColor } from 'react-native-material-kit';
+import ActionButton from 'react-native-action-button';
+import { NavigationActions } from 'react-navigation';
 
-import ItemList from './SmartItemList';
+import PageTitle from '../common/PageTitle';
+import ListItems from './ListItems';
 
 
-export default List = () => (
+export const List = ({ onPressAdd }) => (
     <View style={ styles.container }>
         <View style={ styles.titleContainer }>
-            <StatusBar />
             <PageTitle title="Mush"
             />
         </View>
-        <ItemList />
+        <ListItems />
+        <ActionButton buttonColor={ MKColor.palette_red_500 }
+                      onPress={ onPressAdd }
+        />
     </View>
 );
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+    onPressAdd: () => dispatch(NavigationActions.navigate({ routeName: 'ItemCatalog' }))
+});
+
+export default SmartList = connect(mapStateToProps, mapDispatchToProps)(List);
 
 const styles = StyleSheet.create({
     container: {

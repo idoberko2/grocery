@@ -32,6 +32,11 @@ export const getItem = createSelector(
     items => itemId => items[itemId]
 );
 
+export const getCatalogItem = createSelector(
+    [ itemsSelector ],
+    items => itemId => items[itemId] // TODO: enrich with isInList
+);
+
 const getSectionItemsMap = createSelector(
     [ getListItems ],
     activeItems => Object
@@ -68,9 +73,23 @@ export const getFilteredItemIds = createSelector(
     )
 );
 
+export const getCatalogItemIds = createSelector(
+    [ itemsSelector ], items => Object.keys(items)
+);
+
+export const getFilteredCatalogItemIds = createSelector(
+    [ itemsSelector, getCatalogItemIds, textFilterSelector ],
+    (itemsMap, itemIds, textFilter) => itemIds.filter(id => {
+        const item = itemsMap[id];
+
+        return item.name.toLowerCase().indexOf(textFilter.toLowerCase()) >= 0;
+    })
+);
+
 export const isItemChecked = createSelector(
     [ activeItemsSelector ],
     activeItems => itemId => activeItems[itemId].isChecked
 );
 
 export const getItemFromBlob = (blob, sectionId, itemId) => getItem(blob)(itemId);
+export const getCatalogItemFromBlob = (blob, sectionId, itemId) => getCatalogItem(blob)(itemId);

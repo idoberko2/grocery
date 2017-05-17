@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import { ListView, Text, View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
-import ItemList from './ItemList';
+import ItemList from '../common/ItemList';
 import Item from './Item';
-import {
-    getSectionIds,
-    getSectionFromBlob as getSectionHeaderData
-} from '../../selectors/sectionSelectors';
+
 import {
     getBlob,
-    getFilteredItemIds,
-    getItemFromBlob as getRowData
+    getFilteredCatalogItemIds,
+    getCatalogItemFromBlob as getRowData
 } from '../../selectors/itemSelectors';
 import { getList } from '../../actions/listActions';
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1.id !== r2.id,
     sectionHeaderHasChanged: (s1, s2) => s1.id !== s2.id,
-    getSectionHeaderData,
     getRowData
 });
 
@@ -38,12 +33,6 @@ export class SmartItemList extends Component {
         );
     }
 
-    static renderSectionHeader(sectionData) {
-        return (
-            <Text>{ sectionData.name }</Text>
-        );
-    }
-
     render () {
         const {
             dataSource,
@@ -53,7 +42,6 @@ export class SmartItemList extends Component {
         return (
             <ItemList dataSource={ dataSource }
                       renderRow={ SmartItemList.renderRow }
-                      renderSectionHeader={ SmartItemList.renderSectionHeader }
                       onPressAdd={ goToItemCatalog }
             />
         );
@@ -62,14 +50,12 @@ export class SmartItemList extends Component {
 
 const mapStateToProps = state => ({
     dataSource: dataSource.cloneWithRowsAndSections(
-        getBlob(state), getSectionIds(state), getFilteredItemIds(state)
+        getBlob(state), [ 'dummySection' ], [ getFilteredCatalogItemIds(state) ]
     )
 });
 
-const mapDispatchToProps = dispatch => Object.assign(bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
     getList,
-}, dispatch), {
-    goToItemCatalog: () => dispatch(NavigationActions.navigate({ routeName: 'ItemCatalog' }))
-});
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmartItemList);

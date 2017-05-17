@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-import { toggleItem } from '../../actions/listActions';
-import { getCatalogItem } from '../../selectors/itemSelectors';
+import {
+    getCatalogItem
+} from '../../selectors/itemSelectors';
 
-const ListItem = ({ name, isActive, onClick, ...other }) => (
-    <View>
-        <Text>{ name }</Text>
+const ListItem = ({ name, onClick, ...other }) => (
+    <View style={ styles.rowContainer }>
+        <Text style={ styles.itemName }>{ name }</Text>
     </View>
 );
 
 ListItem.propTypes = {
     name: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired
 };
 
@@ -27,8 +27,7 @@ const mapStateToProps = (state, { rowId }) => {
     } = item;
 
     return {
-        name,
-        isActive: true
+        name
     };
 };
 
@@ -38,3 +37,18 @@ const mapDispatchToProps = (dispatch, { rowId }) => bindActionCreators({
 
 export { ListItem };
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem);
+
+const styles = StyleSheet.create({
+    rowContainer: {
+        flexDirection: 'column',
+        height: 48,
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingTop: 14,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e7e7e7'
+    },
+    itemName: {
+        fontSize: 16
+    }
+});

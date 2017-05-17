@@ -3,11 +3,11 @@ import { ListView, Text, View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ItemList from '../common/ItemList';
-import Item from './Item';
+import CatalogItem from './Item';
 
 import {
     getBlob,
-    getFilteredCatalogItemIds,
+    getNonActiveFilteredCatalogItemIds,
     getCatalogItemFromBlob as getRowData
 } from '../../selectors/itemSelectors';
 import { getList } from '../../actions/listActions';
@@ -29,7 +29,7 @@ export class SmartItemList extends Component {
 
     static renderRow(rowData, sectionId, rowId) {
         return (
-            <Item rowId={ rowId } />
+            <CatalogItem rowId={ rowId } />
         );
     }
 
@@ -50,7 +50,7 @@ export class SmartItemList extends Component {
 
 const mapStateToProps = state => ({
     dataSource: dataSource.cloneWithRowsAndSections(
-        getBlob(state), [ 'dummySection' ], [ getFilteredCatalogItemIds(state) ]
+        getBlob(state), [ 'dummySection' ], [ getNonActiveFilteredCatalogItemIds(state) ]
     )
 });
 

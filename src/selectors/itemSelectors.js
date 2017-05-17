@@ -34,7 +34,7 @@ export const getItem = createSelector(
 
 export const getCatalogItem = createSelector(
     [ itemsSelector ],
-    items => itemId => items[itemId] // TODO: enrich with isInList
+    items => itemId => items[itemId]
 );
 
 const getSectionItemsMap = createSelector(
@@ -79,11 +79,18 @@ export const getCatalogItemIds = createSelector(
 
 export const getFilteredCatalogItemIds = createSelector(
     [ itemsSelector, getCatalogItemIds, textFilterSelector ],
-    (itemsMap, itemIds, textFilter) => itemIds.filter(id => {
-        const item = itemsMap[id];
+    (itemsMap, itemIds, textFilter) => itemIds.filter(id =>
+        itemsMap[id].name.toLowerCase().indexOf(textFilter.toLowerCase()) >= 0)
+);
 
-        return item.name.toLowerCase().indexOf(textFilter.toLowerCase()) >= 0;
-    })
+export const isItemActive = createSelector(
+    [ activeItemsSelector ],
+    activeItems => itemId => Boolean(activeItems[itemId])
+);
+
+export const getNonActiveFilteredCatalogItemIds = createSelector(
+    [ getFilteredCatalogItemIds, isItemActive ],
+    (filteredItemsIds, isActive) => filteredItemsIds.filter(id => !isActive(id))
 );
 
 export const isItemChecked = createSelector(

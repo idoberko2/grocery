@@ -35,8 +35,8 @@ const mapStateToProps = (state, { rowId }) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, { sectionId, rowId }) => bindActionCreators({
-    onClick: toggleItem.bind(null, sectionId, rowId)
+const mapDispatchToProps = (dispatch, { rowId }) => bindActionCreators({
+    onClick: toggleItem.bind(null, rowId)
 }, dispatch);
 
 export { ListItem };

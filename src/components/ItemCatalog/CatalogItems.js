@@ -19,14 +19,6 @@ const dataSource = new ListView.DataSource({
 });
 
 export class SmartItemList extends Component {
-    componentDidMount() {
-        const {
-            getList
-        } = this.props;
-
-        getList();
-    }
-
     static renderRow(rowData, sectionId, rowId) {
         return (
             <CatalogItem rowId={ rowId } />
@@ -54,8 +46,4 @@ const mapStateToProps = state => ({
     )
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    getList,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SmartItemList);
+export default connect(mapStateToProps)(SmartItemList);

@@ -17,6 +17,19 @@ export default (state = {}, action) => {
                 })
             });
         }
+        case consts.ADD_ITEM_TO_LIST: {
+            const {
+                itemId,
+                quantity
+            } = action;
+
+            return Object.assign({}, state, {
+                [ itemId ]: {
+                    isChecked: false,
+                    quantity
+                }
+            });
+        }
         default: {
             return state;
         }

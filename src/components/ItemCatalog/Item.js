@@ -2,21 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 import {
     getCatalogItem
 } from '../../selectors/itemSelectors';
 
-const ListItem = ({ name, onClick, ...other }) => (
-    <View style={ styles.rowContainer }>
+import {
+    addItemToList
+} from '../../actions/listActions';
+
+const ListItem = ({ name, onPress, ...other }) => (
+    <TouchableHighlight style={ styles.rowContainer } onPress={ onPress }>
         <Text style={ styles.itemName }>{ name }</Text>
-    </View>
+    </TouchableHighlight>
 );
 
 ListItem.propTypes = {
     name: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
+    onPress: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, { rowId }) => {
@@ -31,9 +35,9 @@ const mapStateToProps = (state, { rowId }) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, { rowId }) => bindActionCreators({
-    onClick: () => {}
-}, dispatch);
+const mapDispatchToProps = (dispatch, { rowId }) => ({
+    onPress: () => dispatch(addItemToList(rowId))
+});
 
 export { ListItem };
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem);

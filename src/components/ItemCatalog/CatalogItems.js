@@ -1,49 +1,21 @@
-import React, { Component } from 'react';
-import { ListView, Text, View } from 'react-native';
+import React from 'react';
+import { FlatList } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import ItemList from '../common/ItemList';
 import CatalogItem from './Item';
 
 import {
-    getBlob,
-    getNonActiveFilteredCatalogItemIds,
-    getCatalogItemFromBlob as getRowData
+    getCatalogFlatListData
 } from '../../selectors/itemSelectors';
-import { getList } from '../../actions/listActions';
 
-const dataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.id !== r2.id,
-    sectionHeaderHasChanged: (s1, s2) => s1.id !== s2.id,
-    getRowData
-});
-
-export class SmartItemList extends Component {
-    static renderRow(rowData, sectionId, rowId) {
-        return (
-            <CatalogItem rowId={ rowId } />
-        );
-    }
-
-    render () {
-        const {
-            dataSource,
-            goToItemCatalog
-        } = this.props;
-
-        return (
-            <ItemList dataSource={ dataSource }
-                      renderRow={ SmartItemList.renderRow }
-                      onPressAdd={ goToItemCatalog }
-            />
-        );
-    }
-}
+const CatalogItems = ({ data }) => (
+    <FlatList data={ data }
+              renderItem={ ({ item: { key } }) => (<CatalogItem rowId={ key } />) }
+    />
+);
 
 const mapStateToProps = state => ({
-    dataSource: dataSource.cloneWithRowsAndSections(
-        getBlob(state), [ 'dummySection' ], [ getNonActiveFilteredCatalogItemIds(state) ]
-    )
+    data: getCatalogFlatListData(state)
 });
 
-export default connect(mapStateToProps)(SmartItemList);
+export default connect(mapStateToProps)(CatalogItems);

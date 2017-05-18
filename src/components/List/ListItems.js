@@ -1,60 +1,24 @@
 import React, { Component } from 'react';
-import { ListView, Text, View } from 'react-native';
-import { bindActionCreators } from 'redux';
+import { SectionList } from 'react-native';
 import { connect } from 'react-redux';
-import ItemList from '../common/ItemList';
+
 import Item from './Item';
+
 import {
-    getSectionIds,
-    getSectionFromBlob as getSectionHeaderData
-} from '../../selectors/sectionSelectors';
-import {
-    getBlob,
-    getFilteredItemIds,
-    getItemFromBlob as getRowData
+    getFilteredListData
 } from '../../selectors/itemSelectors';
-import { getList } from '../../actions/listActions';
 
-const dataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.id !== r2.id,
-    sectionHeaderHasChanged: (s1, s2) => s1.id !== s2.id,
-    getSectionHeaderData,
-    getRowData
-});
+import Section from './Section';
 
-export class SmartItemList extends Component {
-    static renderRow(rowData, sectionId, rowId) {
-        return (
-            <Item rowId={ rowId } />
-        );
-    }
-
-    static renderSectionHeader(sectionData) {
-        return (
-            <Text>{ sectionData.name }</Text>
-        );
-    }
-
-    render () {
-        const {
-            dataSource,
-            goToItemCatalog
-        } = this.props;
-
-        return (
-            <ItemList dataSource={ dataSource }
-                      renderRow={ SmartItemList.renderRow }
-                      renderSectionHeader={ SmartItemList.renderSectionHeader }
-                      onPressAdd={ goToItemCatalog }
-            />
-        );
-    }
-}
+export const SmartItemList = ({ data }) => (
+    <SectionList sections={ data }
+                 renderItem={ ({ item: { key } }) => (<Item rowId={ key } />) }
+                 renderSectionHeader={ ({ section: { key } }) => (<Section sectionId={ key } />) }
+    />
+);
 
 const mapStateToProps = state => ({
-    dataSource: dataSource.cloneWithRowsAndSections(
-        getBlob(state), getSectionIds(state), getFilteredItemIds(state)
-    )
+    data: getFilteredListData(state)
 });
 
 export default connect(mapStateToProps)(SmartItemList);

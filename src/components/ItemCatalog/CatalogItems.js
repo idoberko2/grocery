@@ -1,22 +1,51 @@
+// external
 import React from 'react';
-import { FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CatalogItem from './Item';
 
+// actions
+import { changeText } from '../../actions/catalogActions';
+
+// selectors
 import {
-    getCatalogFlatListData
+getCatalogFlatListData
 } from '../../selectors/itemSelectors';
+import {
+searchCreateTextSelector
+} from '../../selectors/catalogSelector';
 
-const CatalogItems = ({ data, ...other }) => (
-    <FlatList data={ data }
-              renderItem={ ({ item: { key } }) => (<CatalogItem rowId={ key } />) }
-              { ...other }
-    />
+// components
+import CatalogItem, { ListItem } from './Item';
+import SearchCreateItem from './SearchCreateItem';
+
+const CatalogItems = ({ data, searchCreateText, onChangeText, ...other }) => (
+    <View { ...other }>
+        <SearchCreateItem onChangeText={ onChangeText }
+                          value={ searchCreateText }
+        />
+        {
+            searchCreateText === '' ? null : (
+                <ListItem name={ '+ Create \'' + searchCreateText + '\'...' }
+                          isChecked={ false }
+                          onPress={ () => console.log('creating ' + searchCreateText + '...') }
+
+                />
+            )
+        }
+        <FlatList data={ data }
+                  renderItem={ ({ item: { key } }) => (<CatalogItem rowId={ key } />) }
+        />
+    </View>
 );
 
 const mapStateToProps = state => ({
-    data: getCatalogFlatListData(state)
+    data: getCatalogFlatListData(state),
+    searchCreateText: searchCreateTextSelector(state)
 });
 
-export default connect(mapStateToProps)(CatalogItems);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    onChangeText: changeText
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogItems);

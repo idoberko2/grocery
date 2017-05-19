@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { getSectionIds } from './sectionSelectors';
 import { textFilterSelector } from './filterSelectors';
+import { searchCreateTextSelector } from './catalogSelector';
 
 export const itemsSelector = state => state.items;
 export const activeItemsSelector = state => state.activeItems;
@@ -87,7 +88,7 @@ export const getCatalogItemIds = createSelector(
 );
 
 export const getFilteredCatalogItemIds = createSelector(
-    [ itemsSelector, getCatalogItemIds, textFilterSelector ],
+    [ itemsSelector, getCatalogItemIds, searchCreateTextSelector ],
     (itemsMap, itemIds, textFilter) => itemIds.filter(id =>
         itemsMap[id].name.toLowerCase().indexOf(textFilter.toLowerCase()) >= 0)
 );

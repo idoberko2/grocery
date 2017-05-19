@@ -13,17 +13,17 @@ const PageTitle = ({ title, placeholder, changeFilterText }) => (
     />
 );
 
-const styles = StyleSheet.create({
-    container: {
-        height: 60,
-        backgroundColor: 'red',
-        padding: 10,
-        borderBottomWidth: 2,
-        borderBottomColor: '#000',
-        borderStyle: 'solid',
-        fontSize: 28
-    },
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         // height: 60,
+//         backgroundColor: 'red',
+//         padding: 10,
+//         borderBottomWidth: 2,
+//         borderBottomColor: '#000',
+//         borderStyle: 'solid',
+//         fontSize: 28
+//     },
+// });
 
 PageTitle.propTypes = {
     placeholder: PropTypes.string,

@@ -1,8 +1,8 @@
 import React  from 'react';
 import { StyleSheet, View, ListView, Text } from 'react-native';
 
-export default ItemList = ({ dataSource, renderRow, renderSectionHeader, onPressAdd }) => (
-    <View style={ styles.mainContainer }>
+export default ItemList = ({ dataSource, renderRow, renderSectionHeader, ...other }) => (
+    <View { ...other }>
         <ListView dataSource={ dataSource }
                   renderRow={ renderRow }
                   renderSectionHeader={ renderSectionHeader }
@@ -10,9 +10,3 @@ export default ItemList = ({ dataSource, renderRow, renderSectionHeader, onPress
         />
     </View>
 );
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 12,
-    }
-});

@@ -15,7 +15,7 @@ export const List = ({ onPressAdd }) => (
             <PageTitle title="Mush"
             />
         </View>
-        <ListItems />
+        <ListItems style={ styles.listItems } />
         <ActionButton buttonColor={ MKColor.palette_red_500 }
                       onPress={ onPressAdd }
         />
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
         direction: 'ltr'
     },
     titleContainer: {
-        flex: 2,
+        height: 60
+    },
+    listItems: {
+        flex: 1
     }
 });

@@ -11,7 +11,7 @@ export const ItemCatalog = ({ onPressBack }) => (
         <View style={ styles.titleContainer }>
             <PageTitle title="Mush Catalog" />
         </View>
-        <CatalogItems />
+        <CatalogItems style={ styles.listItems } />
         <View>
             <Button onPress={ onPressBack }
                     title="Back to list"
@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
         direction: 'ltr'
     },
     titleContainer: {
-        flex: 2,
+        height: 60
+    },
+    listItems: {
+        flex: 1
     }
 });

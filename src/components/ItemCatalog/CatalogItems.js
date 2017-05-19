@@ -8,9 +8,10 @@ import {
     getCatalogFlatListData
 } from '../../selectors/itemSelectors';
 
-const CatalogItems = ({ data }) => (
+const CatalogItems = ({ data, ...other }) => (
     <FlatList data={ data }
               renderItem={ ({ item: { key } }) => (<CatalogItem rowId={ key } />) }
+              { ...other }
     />
 );
 

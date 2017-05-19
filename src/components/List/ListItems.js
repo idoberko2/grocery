@@ -10,10 +10,11 @@ import {
 
 import Section from './Section';
 
-export const SmartItemList = ({ data }) => (
+export const SmartItemList = ({ data, ...other }) => (
     <SectionList sections={ data }
                  renderItem={ ({ item: { key } }) => (<Item rowId={ key } />) }
                  renderSectionHeader={ ({ section: { key } }) => (<Section sectionId={ key } />) }
+                 { ...other }
     />
 );
 

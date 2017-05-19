@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { MKColor } from 'react-native-material-kit';
 import ActionButton from 'react-native-action-button';
 import { NavigationActions } from 'react-navigation';
 
-import PageTitle from '../common/PageTitle';
+import PageTitle from './PageTitle';
 import ListItems from './ListItems';
 
 

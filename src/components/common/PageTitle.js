@@ -2,16 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text } from 'react-native';
 import { Toolbar } from 'react-native-material-ui';
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import { changeFilterText } from '../../actions/filterActions';
 
-const PageTitle = ({ title, placeholder, changeFilterText }) => (
-    <Toolbar searchable={ { onChangeText: changeFilterText, placeholder, autoFocus: true } }
-             centerElement={ title }
-             translucent={ true }
-    />
-);
+const PageTitle = ({ title, placeholder, changeFilterText }) => {
+    const additionalProps = {};
+
+    if (changeFilterText) {
+        additionalProps.searchable = {
+            onChangeText: changeFilterText, placeholder, autoFocus: true
+        };
+    }
+
+    return (
+        <Toolbar centerElement={ title }
+                 { ...additionalProps }
+        />
+    );
+};
 
 // const styles = StyleSheet.create({
 //     container: {
@@ -35,12 +41,4 @@ PageTitle.defaultProps = {
     placeholder: 'Search...'
 };
 
-const mapStateToProps = state => ({
-
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-    changeFilterText
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageTitle);
+export default PageTitle;

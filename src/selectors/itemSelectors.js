@@ -55,7 +55,7 @@ export const getListData = createSelector(
     [ getSectionItemsMap, getSectionIds ],
     (sectionItemsMap, sectionIds) => sectionIds.map(sectionId => ({
         key: sectionId,
-        data: sectionItemsMap[sectionId].map(id => ({ key: id }))
+        data: sectionItemsMap[sectionId] ? sectionItemsMap[sectionId].map(id => ({ key: id })) : []
     }))
 );
 

@@ -6,12 +6,14 @@ import { NavigationActions } from 'react-navigation';
 import PageTitle from '../common/PageTitle';
 import CatalogItems from './CatalogItems';
 
-export const ItemCatalog = ({ onPressBack }) => (
+export const ItemCatalog = ({ onPressBack, onCreateItem }) => (
     <View style={ styles.container }>
         <View style={ styles.titleContainer }>
             <PageTitle title="Mush Catalog" />
         </View>
-        <CatalogItems style={ styles.listItems } />
+        <CatalogItems style={ styles.listItems }
+                      onCreateItem={ onCreateItem }
+        />
         <View>
             <Button onPress={ onPressBack }
                     title="Back to list"
@@ -23,7 +25,8 @@ export const ItemCatalog = ({ onPressBack }) => (
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-    onPressBack: () => dispatch(NavigationActions.navigate({ routeName: 'List' }))
+    onPressBack: () => dispatch(NavigationActions.navigate({ routeName: 'List' })),
+    onCreateItem: () => dispatch(NavigationActions.navigate({ routeName: 'List' }))
 });
 
 export default SmartItemCatalog = connect(mapStateToProps, mapDispatchToProps)(ItemCatalog);

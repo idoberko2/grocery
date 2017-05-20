@@ -19,7 +19,7 @@ searchCreateTextSelector
 import CatalogItem, { ListItem } from './Item';
 import SearchCreateItem from './SearchCreateItem';
 
-const CatalogItems = ({ data, searchCreateText, onChangeText, ...other }) => (
+const CatalogItems = ({ data, searchCreateText, onChangeText, onCreateItem, ...other }) => (
     <View { ...other }>
         <SearchCreateItem onChangeText={ onChangeText }
                           value={ searchCreateText }
@@ -28,7 +28,7 @@ const CatalogItems = ({ data, searchCreateText, onChangeText, ...other }) => (
             searchCreateText === '' ? null : (
                 <ListItem name={ '+ Create \'' + searchCreateText + '\'...' }
                           isChecked={ false }
-                          onPress={ () => console.log('creating ' + searchCreateText + '...') }
+                          onPress={ onCreateItem }
 
                 />
             )

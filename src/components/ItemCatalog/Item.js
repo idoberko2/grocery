@@ -13,7 +13,10 @@ import {
 } from '../../actions/listActions';
 
 const ListItem = ({ name, onPress, ...other }) => (
-    <TouchableHighlight style={ styles.rowContainer } onPress={ onPress }>
+    <TouchableHighlight style={ styles.rowContainer }
+                        onPress={ onPress }
+                        { ...other }
+    >
         <Text style={ styles.itemName }>{ name }</Text>
     </TouchableHighlight>
 );
